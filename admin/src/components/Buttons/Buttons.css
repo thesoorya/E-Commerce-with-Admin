@@ -1,0 +1,24 @@
+.button-container {
+  display: flex;
+  width: 100%;
+}
+
+.full-width-button {
+  flex: 1;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  color: #191815;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.full-width-button button {
+  all: unset;
+}
+
+.full-width-button:hover {
+  background-color: #e0e0e0;
+}
