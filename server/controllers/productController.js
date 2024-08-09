@@ -46,20 +46,35 @@ exports.listProduct = async (req, res) => {
 
 exports.deleteProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.body.id);
-    fs.unlink(`uploads/${product.image}`, () => {});
-
-    await Product.findByIdAndDelete(req.body.id);
-
+    const { id } = req.params;
+    if (!id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No ID provided" });
+    }
+    const product = await Product.findById(id);
+    if (!product) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Product not found" });
+    }
+    if (product.image) {
+      fs.unlink(`uploads/${product.image}`, (err) => {
+        if (err) {
+          console.error("Error removing image file:", err);
+        }
+      });
+    }
+    await Product.findByIdAndDelete(id);
     res.status(200).json({
       success: true,
-      message: "product deleted",
+      message: "Product deleted successfully",
     });
   } catch (err) {
-    console.log(err);
+    console.error("Error deleting product:", err);
     res.status(400).json({
       success: false,
-      message: "Error",
+      message: "Error deleting product",
     });
   }
 };
