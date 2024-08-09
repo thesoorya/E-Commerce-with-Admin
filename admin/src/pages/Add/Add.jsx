@@ -23,12 +23,12 @@ const Add = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("price", price);
-    formData.append("category", category);
-    formData.append("image", image);
 
+    formData.append("name", name.toLowerCase());
+    formData.append("description", description.toLowerCase());
+    formData.append("price", price); // Price doesn't need to be uppercase
+    formData.append("category", category.toLowerCase());
+    formData.append("image", image);
     try {
       const response = await axios.post(`${url}/api/product/add`, formData);
 
