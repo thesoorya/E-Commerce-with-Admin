@@ -1,26 +1,47 @@
-// src/components/Auth/Register.jsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { StoreContext } from '../../components/Context/StoreContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import "./Register.css";
 
 const Register = () => {
+  const { url } = useContext(StoreContext);
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration logic here
+    const data = { username, email, password };
+
+    try {
+      const response = await axios.post(`${url}/api/auth/register`, data);
+      if (response.data.success) {
+        toast.success('Registration successful');
+        navigate('/login');
+      } else {
+        setError(response.data.message);
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
+      setError(errorMessage);
+      toast.error('loremsdcdsbchdvbdhvcbdvdgcvsdgcvsdjcvsdgcv sdjhvcdshfvb bdvhb dhcvjbdscvjhb sdhvjcdsvbd');
+    }
   };
 
   return (
     <div className="auth-container">
       <h2>Register</h2>
+      {<div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
-            type="password"
+            type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
