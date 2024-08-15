@@ -29,14 +29,12 @@ const Register = () => {
     } catch (error) {
       const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
       setError(errorMessage);
-      toast.error('loremsdcdsbchdvbdhvcbdvdgcvsdgcvsdjcvsdgcv sdjhvcdshfvb bdvhb dhcvjbdscvjhb sdhvjcdsvbd');
     }
   };
 
   return (
     <div className="auth-container">
       <h2>Register</h2>
-      {<div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username</label>
@@ -71,6 +69,7 @@ const Register = () => {
             required
           />
         </div>
+        {<div className="error-message" style={{color: 'red'}}>{error}</div>}
         <button type="submit">Register</button>
       </form>
       <p>

@@ -1,32 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import Product from "../../components/Product/Product";
 import { StoreContext } from "../../components/Context/StoreContext";
-import axios from 'axios';
-import './Home.css'; // Add this import
+import './Home.css';
 
 const Home = () => {
-  const { url } = useContext(StoreContext);
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!url) {
-      console.error("URL is not defined in the context");
-      return;
-    }
-
-    setLoading(true);
-    axios.get(`${url}/api/product/list`)
-      .then((res) => {
-        setProducts(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  }, [url]);
+  const {products, loading} = useContext(StoreContext)
 
   return (
     <div className="home-wrapper">

@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 
+// Create token function with expiration
 const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
 exports.register = async (req, res) => {
@@ -60,6 +61,7 @@ exports.register = async (req, res) => {
     });
   }
 };
+
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 

@@ -1,37 +1,56 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const StoreContext = createContext();
 
 const StoreContextProvider = ({ children }) => {
   const url = 'http://localhost:5000';
   const [cartItems, setCartItems] = useState({});
+  const [token, setToken] = useState('')
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const addToCart = (id) => {
-    setCartItems(prev => ({
-      ...prev,
-      [id]: (prev[id] || 0) + 1
-    }));
-  };
+  useEffect(() => {
+    if (!url) {
+      console.error("URL is not defined in the context");
+      return;
+    }
 
-  const removeFromCart = (id) => {
-    setCartItems(prev => {
-      const updatedItems = { ...prev };
-      if (updatedItems[id]) {
-        if (updatedItems[id] > 1) {
-          updatedItems[id] -= 1;
-        } else {
-          delete updatedItems[id];
-        }
-      }
-      return updatedItems;
-    });
-  };
+    setLoading(true);
+    axios.get(`${url}/api/product/list`)
+      .then((res) => {
+        setProducts(res.data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setToken(localStorage.getItem('token'))
+    }
+  })
+
+  const addToCart = () => {
+
+  }
+
+  const removeFromCart = () => {
+
+  }
 
   const contextData = {
     url,
     cartItems,
     addToCart,
-    removeFromCart
+    removeFromCart,
+    token,
+    setToken,
+    products,
+    loading
   };
 
   return (

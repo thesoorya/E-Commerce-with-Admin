@@ -29,14 +29,12 @@ const Login = () => {
     } catch (error) {
       const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
       setError(errorMessage);
-      toast.error(errorMessage);
     }
   };
 
   return (
     <div className="auth-container">
       <h2>Login</h2>
-      {<div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
@@ -60,6 +58,7 @@ const Login = () => {
             required
           />
         </div>
+        {<div className="error-message" style={{color: 'red'}}>{error}</div>}
         <button type="submit">Login</button>
       </form>
       <p>

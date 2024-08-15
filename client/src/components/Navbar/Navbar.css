@@ -45,7 +45,7 @@
 }
 
 .nav-links .logout-btn {
-  background-color: steelblue;
+  background-color: #0056b3;
   color: #fbfbfb;
   border-radius: 5px;
   margin: 10px 0;
@@ -53,12 +53,12 @@
 }
 
 .nav-links .logout-btn:hover {
-  background-color: #0056b3;
+  background-color: #004085;
 }
 
 .signup-btn,
 .login-btn {
-  background-color: steelblue;
+  background-color: #0056b3;
   color: #fbfbfb;
   padding: 10px 20px;
   border-radius: 5px;
